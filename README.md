@@ -1,2 +1,2 @@
 # rubin-lc-simulator
-Simulate realistic light curves using Rubin/LSST cadence and noise models. Includes support for injecting user-defined light curve models with per-epoch noise based on LSST five sigma depth and sky location
+A lightweight Python package for simulating time-domain light curves with Rubin/LSST cadence and photometric uncertainty. Supports sky-position-dependent cadence extraction via rubin_sim, customizable light curve injection, and realistic noise modeling based on Rubin’s five sigma depth.
