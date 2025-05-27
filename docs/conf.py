@@ -22,7 +22,7 @@ copyright = '2025, Daniel Godines'
 author = 'Daniel Godines'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1'
+release = '1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -85,7 +85,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-#html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -93,8 +93,8 @@ pygments_style = None
 #
 # html_theme_options = {}
 html_static_path = ["./source/_static"]
-#html_logo = "_static/.png"
-#html_theme_options = {"logo_only": True}
+html_logo = "./source/_static/logo.png"
+html_theme_options = {"logo_only": True}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -115,7 +115,7 @@ html_static_path = ["./source/_static"]
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'rubin_lc_simulatordoc'
+htmlhelp_basename = 'rubin_lc_simulator_doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -143,7 +143,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'rubin_lc_simulator.tex', 'rubin_lc_simulator Documentation',
-     'AUTHORNAME', 'manual'),
+     'Daniel Godines', 'manual'),
 ]
 
 
@@ -164,7 +164,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'rubin_lc_simulator', 'rubin_lc_simulator Documentation',
-     author, 'rubin_lc_simulator', 'Machine Learning Engine',
+     author, 'rubin_lc_simulator', 'LSST light curve simulator',
      'Miscellaneous'),
 ]
 

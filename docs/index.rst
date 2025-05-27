@@ -16,13 +16,19 @@ The current stable version can be installed via pip:
     pip install rubin-lc-simulator
 
 
+The code utilizes the `rubin_sim <https://rubin-sim.lsst.io/>`_). Python package. Please follow the installation instructions on the `documentation page <https://rubin-sim.lsst.io/installation.html#quick-installation>`_ and ensure the following imports work before using this code:
+
+.. code-block:: python
+
+   from rubin_sim import maf, phot_utils, data
+
+
 Pages
 ==================
 .. toctree::
    :maxdepth: 1
 
-   source/Page_1
-   source/Page_2
+   source/Example
 
 Documentation
 ==================
