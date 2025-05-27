@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rubin-lc-simulator"
-version = "1.0"
+version = "1.1"
 description = "Open-source tool to simulate LSST light curves with Rubin cadence and per-epoch noise."
 authors = [
   { name = "Daniel Godines", email = "danielgodinez123@gmail.com" }

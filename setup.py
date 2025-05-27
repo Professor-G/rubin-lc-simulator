@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="rubin-lc-simulator",
-    version="1.0",
+    version="1.1",
     author="Daniel Godines",
     author_email="danielgodinez123@gmail.com",
     description="Open-source tool to simulate LSST light curves with Rubin cadence and per-epoch noise.",
