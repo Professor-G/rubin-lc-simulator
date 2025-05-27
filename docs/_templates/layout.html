@@ -9,7 +9,7 @@
 
     /* Sidebar */
     .wy-nav-side {
-      background: #000000;
+      background: #fff79a;  /* Light yellow sidebar */
     }
 
     /* Main page content background */
@@ -17,9 +17,11 @@
       background: #fff4e5;  /* Light orange background */
     }
 
-    /* Optional: adjust text color if needed */
-    .wy-nav-content-wrap {
-      color: #222222;
+    /* Optional: text color override for better contrast on yellow */
+    .wy-menu-vertical a, 
+    .wy-side-nav-search input, 
+    .wy-side-nav-search .icon {
+      color: #333333;
     }
   </style>
 {% endblock %}
