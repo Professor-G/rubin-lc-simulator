@@ -31,4 +31,4 @@ Here is the documentation for all the modules:
 .. toctree::
    :maxdepth: 1
 
-   source/rubin-lc-simulator
+   source/rubin_lc_simulator
