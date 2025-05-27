@@ -3,7 +3,9 @@
 Example
 ==================
 
-Below is an example showing how to use the code to simulate a realistic microlensing event at a randomly sky position.
+Below is an example showing how to use the the `simulator <https://rubin-lc-simulator.readthedocs.io/en/latest/autoapi/rubin_lc_simulator/simulator/index.html#rubin_lc_simulator.simulator.LSSTSimulator>`_ class to simulate a realistic microlensing event at a randomly drawn sky position.
+
+The first step is to extract the planned cadence given a single bandpass and RA/DEC in decimal degrees. 
 
 .. code-block:: python
 
@@ -12,7 +14,7 @@ Below is an example showing how to use the code to simulate a realistic microlen
    # Will simulate i-band data
    band = 'i' 
 
-   # Helper function to draw LSST sky positions (positions for which airmass <1.4)
+   # Helper function to draw LSST sky positions (only those for which airmass < 1.4)
    ra_dec = simulator.draw_random_coord() 
 
    # Initiate the class instance with the positions and bandpass
@@ -25,9 +27,9 @@ Below is an example showing how to use the code to simulate a realistic microlen
    mjd = lsst_simulator.lsst_real_lc(dataSlice)
 
 
-With the cadence stored the user can now simulate their lightcurve.
+With the cadence saved, we can now simulate the lightcurve using user-defined models. 
 
-For this example we will use the built-in lightcurves module which includes a function to simulate microlensing events (PSPL). This function returns the simulated magnitude as well as the event parameters, but note that our simulator only requires the magnitudes.
+For this example we will use the built-in `lightcurves <https://rubin-lc-simulator.readthedocs.io/en/latest/autoapi/rubin_lc_simulator/lightcurves/index.html>`_ module which includes a function to simulate microlensing events (PSPL). This function returns the simulated magnitude as well as the event parameters, but note that our simulator only requires the magnitudes.
 
 .. code-block:: python
 
@@ -43,7 +45,7 @@ With the cadence-dependent magnitudes simulated, we can now simulate the per-epo
 
 .. code-block:: python   
 
-   # The following class method will simulate the errors and assign the lightcurve class (mjd, mag, magerr)
+   # The following class method will simulate the errors and assign the lightcurve attributes (mjd, mag, magerr)
    lsst_simulator.lsst_real_lc(dataSlice, lc=mag)
 
    # Plot
