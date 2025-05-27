@@ -235,7 +235,7 @@ class LSSTSimulator:
 
         # If no model is input (lc is None) simply return the scheduled cadence for the given sky position
         if lc is None:
-            return mjd[np.argsort(mjd)] # Sorting always because I am paranoid!
+            return mjd # This is not sorted nor should it be!
 
         # If user inputs the magnitudes 
         if isinstance(lc, (np.ndarray, list)):
@@ -253,7 +253,7 @@ class LSSTSimulator:
             # Errors are added to each point using a normal distribution as per the corresponding magerrs of each point. 
             mag = np.random.normal(loc=lc, scale=magerr)
 
-            # Ensure data points are sorted according to the timestamps and return the full lightcurve
+            # Only at the end do we ensure data points are sorted according to the timestamps and return the full lightcurve
             sort = np.argsort(mjd)
             return mjd[sort], mag[sort], magerr[sort]
         else:
