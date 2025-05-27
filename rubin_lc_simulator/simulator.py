@@ -96,14 +96,25 @@ class LSSTSimulator:
 
 
     def __repr__(self) -> str:
-        """Str representation of the class instance. """
+        """
+        Return a string representation of the class instance.
+
+        Returns
+        -------
+        str
+            Human-readable summary of the object.
+        """
+
         return f"<LSSTSimulator ra={self.ra:.3f}, dec={self.dec:.3f}, band='{self.band}'>"
 
     def _slice_sky(self) -> maf.slicers.UserPointsSlicer:
-        """Slice the sky at the specified RA/DEC location.
+        """
+        Slice the sky at the specified RA/DEC location.
 
-        Returns:
-            The spatial slicer the rubin_sim API uses to evaluate the sky on the spatial grid.
+        Returns
+        -------
+        rubin_sim.maf.slicers.UserPointsSlicer
+            The spatial slicer used by the `rubin_sim` API to evaluate the sky at the specified position.
         """
 
         # The spatial slicer the rubin_sim API uses to evaluate the sky on the spatial grid.
@@ -115,8 +126,10 @@ class LSSTSimulator:
         """
         Query OpSim and return the raw metric data for the target position.
 
-        Returns:
-            The metrics data for the sky position. 
+        Returns
+        -------
+        np.ndarray
+            Array containing the raw simulation metrics for the specified sky position.
         """
 
         # Slice the sky at the specific location
@@ -139,15 +152,20 @@ class LSSTSimulator:
 
     def LSST_metrics(self) -> Optional[np.ndarray]:
         """
-        Public wrapper to obtain the visit table *without* any filtering and check if the slice is valid.
+        Public wrapper to obtain the visit table without any filtering and check if the slice is valid.
 
-        Note:
-            This method must always be run by the end-user, right after initialization. The spatial slicer this function returns
-            containing the simulation metrics for the given sky position is never assigned as an attribute. This is a design choice. 
-            This dataSlice must be assigned a local variable and managed by the user!
+        This method must be called by the user immediately after initialization. The returned `dataSlice` is not
+        stored as a class attribute—by design, it must be handled externally by the user.
 
-        Returns:
-            The dataSlice which encapsulates the information on the visits overlapping a single point in the sky
+        Returns
+        -------
+        np.ndarray
+            The `dataSlice` containing simulation metrics for a single sky position, representing all overlapping visits.
+
+        Notes
+        -----
+        The returned `dataSlice` is never stored internally. It should be assigned to a local variable and 
+        passed manually to downstream methods as needed.
         """
 
         # Retrieve the necessary metrics from rubin_sim
@@ -163,11 +181,15 @@ class LSSTSimulator:
         """
         Restrict a data slice to the configured band and MJD range.
 
-        Args:
-            data (numpy.ndarray): Slice of data containing filter, observation start MJD, and five sigma depth.
-        
-        Returns:
-            The filtered dataSlice containing the metrics.
+        Parameters
+        ----------
+        data : np.ndarray
+            Array containing observation metadata, including filter, start MJD, and five-sigma depth.
+
+        Returns
+        -------
+        np.ndarray
+            Filtered data slice containing only entries within the configured band and MJD range.
         """
 
         mask = (
@@ -184,19 +206,29 @@ class LSSTSimulator:
         """
         Generate a light curve with Rubin cadence and LSST noise model.
 
-        Note: 
-            This method assigns local lightcurve variales only (e.g., mjd instead of self.mjd). 
-            The lsst_real_lc() class method is the routine that assigns these as class attributes. 
-            The code is structured this way as this method is intended to be run twice, the first time
-            to extract the simulated timestamps, which the user can then use to simulate their lightcurve
-            with their own model(s), after which the method can be re-run with the simulated magnitudes 
-            during which the full lightcurve with appropriate errors can be constructed and saved.
-        Args:
-            data (np.ndarray): The dataSlice containing the cadence metrics for one position.
-            lc (np.ndarray, optional): Ideal light curve. Can be a list or an array. Set to None when only the cadence/timestmaps are required.
+        This method operates locally and does not assign instance attributes. Use
+        `lsst_real_lc()` if you want the outputs stored as class attributes.
 
-        Returns:
-            Either MJD array (if lc is None), or (mjd, mag, magerr) tuple.
+        Parameters
+        ----------
+        data : np.ndarray
+            The `dataSlice` containing cadence metrics for a single sky position.
+        lc : np.ndarray, optional
+            Ideal (noise-free) light curve to which LSST noise will be added. If None,
+            the method returns only the observation timestamps.
+
+        Returns
+        -------
+        np.ndarray or tuple of np.ndarray
+            If `lc` is None, returns an array of observation MJDs. If `lc` is provided, 
+            returns a tuple of arrays: (mjd, mag, magerr), representing the light curve 
+            with simulated LSST noise.
+        
+        Notes
+        -----
+        This method is designed to be called twice. The first call retrieves the cadence (MJD array), 
+        allowing the user to simulate their own light curve. The second call takes the simulated 
+        magnitudes and returns the full light curve with LSST noise.
         """
 
         mjd = data['observationStartMJD'] # Simulated cadence for the sky position
@@ -232,18 +264,22 @@ class LSSTSimulator:
     ) -> Optional[np.ndarray]:
         """
         Filter `data_slice` to the requested band and either return the cadence (MJD)
-        or attach a full noisy light-curve to the instance.
+        or attach a full noisy light curve to the instance.
 
-        Args:
-            data_slice : np.ndarray
-                Output from `LSST_metrics()`.
-            lc : np.ndarray | None, optional
-                Ideal magnitudes to which LSST noise will be added.
+        Parameters
+        ----------
+        data_slice : np.ndarray
+            Output from `LSST_metrics()`, containing observation metadata.
+        lc : np.ndarray, optional
+            Ideal (noise-free) magnitudes to which LSST noise will be added. If provided,
+            the method assigns light curve attributes to the instance.
 
         Returns
-            np.ndarray | None
-            Returns MJD array if lc=None, otherwise it does not return anything and instead assigns
-            the following class attributes: (mjd, mag, magerr) tuple.
+        -------
+        np.ndarray or None
+            Returns an array of observation MJDs if `lc` is None. If `lc` is provided, 
+            the function modifies the instance in-place by setting the `mjd`, `mag`, 
+            and `magerr` attributes, and returns None.
         """
 
         data_band = self._filter_band_time(data_slice)
@@ -279,20 +315,29 @@ def draw_random_baseline(band: str) -> float:
     )
 
 
-
-def draw_random_coord(ra_range=(0, 360), dec_range=(-75,15)):
+def draw_random_coord(ra_range: tuple = (0, 360), dec_range: tuple = (-75, 15)) -> list:
     """
-    Draw coordinates using randomly uniform distributions.
+    Draw a random sky coordinate within the specified RA and DEC range.
 
-    Args:
-        ra_range (tuple): Right ascension range to draw from, in degrees. Defaults to entire sky (0-360).
-        dec_range (tuple): Declination range to draw from, in degrees. Defaults to (-70, 12), sampling over the Southern sky that LSST will observe
+    Parameters
+    ----------
+    ra_range : tuple of float, optional
+        Right ascension range to sample from, in degrees. Default is (0, 360).
+    dec_range : tuple of float, optional
+        Declination range to sample from, in degrees. Default is (-75, 15),
+        covering most of the Southern sky observed by LSST.
 
-    Returns:
-        List with two floats, ra and dec in decimal degrees
+    Returns
+    -------
+    list of float
+        A list containing two values: right ascension and declination in decimal degrees.
     """
 
     ra = np.random.uniform(ra_range[0], ra_range[1])
-    dec = np.degrees(np.arcsin(np.random.uniform(np.sin(np.radians(dec_range[0])), np.sin(np.radians(dec_range[1])))))
+
+    dec = np.degrees(np.arcsin(np.random.uniform(
+        np.sin(np.radians(dec_range[0])),
+        np.sin(np.radians(dec_range[1]))
+    )))
 
     return [ra, dec]
