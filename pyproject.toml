@@ -1,3 +1,17 @@
 [build-system]
 requires = ["setuptools>=61", "wheel", "numpy"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "rubin-lc-simulator"
+version = "0.1"
+description = "Open-source tool to simulate LSST light curves with Rubin cadence and per-epoch noise."
+authors = [
+  { name = "Daniel Godines", email = "danielgodinez123@gmail.com" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+  "numpy"
+]
