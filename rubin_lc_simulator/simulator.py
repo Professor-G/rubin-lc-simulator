@@ -7,7 +7,7 @@ Created on Thu Jun 28 20:30:11 2018
 from __future__ import annotations
 from typing import Dict, Tuple, Optional, List
 import numpy as np
-import config  
+from rubin_lc_simulator import config  
 
 import rubin_sim.maf as maf
 from rubin_sim.phot_utils import signaltonoise, PhotometricParameters, rubin_bandpasses
