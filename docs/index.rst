@@ -7,7 +7,7 @@ Welcome to rubin-lc-simulator's documentation!
 ===============================
 This is an open-source program for simulating light curves with realistic LSST cadence and photometric noise. The code is designed to work with any given light curve model, although for testing purposes we provide a function for simulating microlensing events (PSPL only) and constant, signal-less lightcurves.
 
-This framework was designed and used for research in anomaly detection techniques, (Romao, Croon, & Godines 2025). If you use this code for your own research we would appreciate citations to `our paper <https://arxiv.org/abs/2503.09699>`_.
+This framework was designed and used for research in anomaly detection techniques, (Romao, Croon, & Godines 2025). If you use this code for your own research we would appreciate citations to `the paper <https://arxiv.org/abs/2503.09699>`_.
 
 Installation
 ==================

@@ -29,7 +29,7 @@ The first step is to extract the planned cadence given a single bandpass and RA/
 
 With the cadence saved, we can now simulate the lightcurve using any model that works with adaptive cadence. **IMPORTANT: The mjd as output above may not be sorted, this is by design. When used to simulate your lightcurves you must ensure no sorting occurs, and that the magnitudes you simulate are according to this unsorted array!** 
 
-For this example we will use the built-in `lightcurves <https://rubin-lc-simulator.readthedocs.io/en/latest/autoapi/rubin_lc_simulator/lightcurves/index.html>`_ module which includes a function to simulate microlensing events (PSPL). This function returns the simulated magnitude as well as the event parameters, but note that our simulator only requires the magnitudes.
+For this example we will use the built-in `lightcurves <https://rubin-lc-simulator.readthedocs.io/en/latest/autoapi/rubin_lc_simulator/lightcurves/index.html>`_ module which includes a function to simulate microlensing events (PSPL). This function returns the simulated magnitude as well as the event parameters, but note that the simulator only requires the magnitudes.
 
 .. code-block:: python
 
@@ -41,7 +41,7 @@ For this example we will use the built-in `lightcurves <https://rubin-lc-simulat
    # Simulate the lightcurve
    mag, u0, t0, tE, blend_ratio = lightcurves.microlensing(mjd, baseline)
   
-With the cadence-dependent magnitudes simulated, we can now simulate the per-epoch errors and add noise to each point. The `lsst_real_lc` class method will at the end assign the `mjd`, `mag`, and `magerr` class attributes. **These will be sorted by timestamp. Important to remember that the input mag must not be sorted as it must correspond to the initially ouput mjd**.
+With the cadence-dependent magnitudes simulated, we can now simulate the per-epoch errors and add noise to each point. The ``lsst_real_lc`` method will at the end assign the ``mjd``, ``mag``, and ``magerr`` class attributes. **These will be sorted by timestamp. Important to remember that the input mag must not be sorted as it must correspond to the initially ouput mjd**.
 
 .. code-block:: python   
 
