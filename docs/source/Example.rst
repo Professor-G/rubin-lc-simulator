@@ -41,7 +41,7 @@ For this example we will use the built-in `lightcurves <https://rubin-lc-simulat
    # Simulate the lightcurve
    mag, u0, t0, tE, blend_ratio = lightcurves.microlensing(mjd, baseline)
   
-With the cadence-dependent magnitudes simulated, we can now simulate the per-epoch errors and add noise to each point. The ``lsst_real_lc`` method will at the end assign the ``mjd``, ``mag``, and ``magerr`` class attributes. **These will be sorted by timestamp. Important to remember that the input mag must not be sorted as it must correspond to the initially ouput mjd**.
+With the cadence-dependent magnitudes simulated, we can now simulate the per-epoch errors and add noise to each point. This is done via the ``lsst_real_lc`` class method, which takes as input the extracted dataSlice as well as the simulated magnitudes from your model. This method will assign the ``mjd``, ``mag``, and ``magerr`` attributes. **These will be sorted by timestamp. Important to remember that the input mag must not be sorted as it must correspond to the initially ouput mjd**.
 
 .. code-block:: python   
 
