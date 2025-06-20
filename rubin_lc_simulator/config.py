@@ -30,7 +30,7 @@ FIVE_SIGMA_DEPTH = {
 # Time range for simulation (MJD)
 MJD_RANGE = {
     'min': 0,
-    'max': 65000
+    'max': 70000
 }
 
 PHOTO_PARAMS = {
