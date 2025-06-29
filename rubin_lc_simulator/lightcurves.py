@@ -40,6 +40,11 @@ def microlensing(
     """
     Simulate a single-lens, point-source microlensing event with blending.
 
+    If not defined, the microlensing parameter space is determined using data from an 
+    analysis of the OGLE III microlensing survey from Y. Tsapras et al (2016).
+    See: The OGLE-III planet detection efficiency from six years of microlensing observations (2003 to 2008).
+    (https://arxiv.org/abs/1602.02519)
+
     Parameters
     ----------
     timestamps : array-like
@@ -59,12 +64,13 @@ def microlensing(
     Returns
     -------
     Tuple
-        * `mag`          – simulated magnitudes (np.ndarray)
-        * `u0`           – drawn impact parameter
-        * `t0`           – drawn peak time (days)
-        * `tE`           – drawn event timescale (days)
-        * `blend_ratio`  – flux blending ratio *f_b / f_s*
+        * `mag` – simulated magnitudes (np.ndarray)
+        * `u0` – drawn impact parameter
+        * `t0` – drawn peak time (days)
+        * `tE` – drawn event timescale (days)
+        * `blend_ratio` – flux blending ratio *f_b / f_s*
     """
+    
     ts = np.asarray(timestamps, dtype=float)
 
     # Draw parameters
@@ -92,7 +98,7 @@ def microlensing(
     flux_base = 10.0 ** (-0.4 * mag_base)
 
     f_s = np.median(flux_base) / (1.0 + blend_ratio)  # source flux
-    f_b = blend_ratio * f_s                           # blend flux
+    f_b = blend_ratio * f_s # blend flux
     flux_obs = f_s * A_t + f_b
 
     mag_obs = -2.5 * np.log10(flux_obs)
